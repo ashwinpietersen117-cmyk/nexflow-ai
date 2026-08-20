@@ -1,0 +1,9 @@
+{
+  "appId": "com.nexaflow.ai",
+  "appName": "NexaFlow AI",
+  "webDir": "www",
+  "server": {
+    "url": "https://ashwinpietersen117-cmyk.github.io/nexflow-ai/",
+    "cleartext": false
+  }
+}
