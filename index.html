@@ -4,53 +4,211 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NexaFlow AI</title>
 <style>
-body{margin:0;background:#07101d;color:white;font-family:Arial;text-align:center}
-header{padding:25px;border-bottom:1px solid #263449}
-.logo{font-size:25px;font-weight:bold}.green{color:#49e17a}
-.hero{padding:80px 20px}
-h1{font-size:50px;margin:0 0 20px}
-p{color:#b8c2d1;font-size:18px;line-height:1.6}
-.button{display:inline-block;background:#49e17a;color:#07101d;padding:16px 25px;border-radius:10px;text-decoration:none;font-weight:bold}
-section{padding:50px 20px;max-width:900px;margin:auto}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.card{background:#101b2b;padding:25px;border-radius:15px;border:1px solid #263449}
-.card h3{color:#49e17a}
-.price{font-size:45px;font-weight:bold}
-@media(max-width:700px){.cards{grid-template-columns:1fr}h1{font-size:40px}}
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#fff;font-family:Arial,sans-serif}
+header{padding:22px;text-align:center;background:#0b1728;border-bottom:1px solid #1c3048}
+.logo{font-size:28px;font-weight:bold;color:#42e879}
+h1{margin:8px 0;font-size:28px}
+h2{font-size:24px}
+p{color:#b9c7d8;line-height:1.5}
+main{padding:18px;max-width:600px;margin:auto}
+.card{background:#101e30;border:1px solid #243850;border-radius:18px;padding:22px;margin:15px 0}
+.button{display:block;width:100%;padding:16px;margin:10px 0;border:0;border-radius:12px;background:#42e879;color:#06101b;font-size:17px;font-weight:bold}
+.secondary{background:#17283d;color:#fff}
+input,textarea{width:100%;padding:14px;margin:7px 0;background:#091626;border:1px solid #30465f;border-radius:10px;color:#fff;font-size:16px}
+.page{display:none}
+.page.active{display:block}
+.stat{font-size:30px;color:#42e879;font-weight:bold}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0b1728;border-top:1px solid #243850;display:flex}
+nav button{flex:1;background:none;border:0;color:#b9c7d8;padding:12px 4px;font-size:12px}
+nav button.active{color:#42e879}
+.chat{min-height:220px}
+.msg{padding:12px;margin:8px 0;border-radius:12px;background:#17283d}
+.ai{border-left:4px solid #42e879}
 </style>
 </head>
+
 <body>
+
 <header>
-<div class="logo">NexaFlow <span class="green">AI</span></div>
+<div class="logo">NexaFlow AI</div>
+<div>Business Automation</div>
 </header>
 
-<div class="hero">
-<h1>Your Business.<br><span class="green">Automated.</span></h1>
-<p>NexaFlow AI helps small businesses answer customers, capture leads and automate repetitive work.</p>
-<a class="button" href="#pricing">Start Now</a>
+<main>
+
+<section id="home" class="page active">
+<div class="card">
+<h1>Your Business.<br>Automated.</h1>
+<p>NexaFlow AI helps businesses manage customers, capture leads and automate repetitive work.</p>
+<button class="button" onclick="showPage('dashboard')">Open Dashboard</button>
 </div>
 
-<section>
+<div class="card">
 <h2>What NexaFlow Does</h2>
-<div class="cards">
-<div class="card"><h3>AI Assistant</h3><p>Answers routine customer questions using your business information.</p></div>
-<div class="card"><h3>Lead Capture</h3><p>Collects potential customer information automatically.</p></div>
-<div class="card"><h3>Follow-ups</h3><p>Helps businesses follow up with potential customers.</p></div>
+<p>🤖 <b>AI Assistant</b><br>Answers routine customer questions.</p>
+<p>👥 <b>Lead Capture</b><br>Collects potential customer information.</p>
+<p>📋 <b>Follow-ups</b><br>Helps you follow up with potential customers.</p>
 </div>
 </section>
 
-<section id="pricing">
+<section id="dashboard" class="page">
+<h2>Business Dashboard</h2>
+
+<div class="card">
+<p>Leads</p>
+<div class="stat" id="leadCount">0</div>
+</div>
+
+<div class="card">
+<p>Follow-ups</p>
+<div class="stat" id="followCount">0</div>
+</div>
+
+<button class="button" onclick="showPage('assistant')">🤖 AI Assistant</button>
+<button class="button secondary" onclick="showPage('leads')">👥 Manage Leads</button>
+<button class="button secondary" onclick="showPage('followups')">📋 Follow-ups</button>
+<button class="button secondary" onclick="showPage('pricing')">💳 Subscription</button>
+</section>
+
+<section id="assistant" class="page">
+<h2>AI Assistant</h2>
+<div class="card chat" id="chat">
+<div class="msg ai">Hello! I'm your NexaFlow AI assistant. Ask me about your business.</div>
+</div>
+<input id="question" placeholder="Ask a question...">
+<button class="button" onclick="askAI()">Ask AI</button>
+<button class="button secondary" onclick="showPage('dashboard')">Back to Dashboard</button>
+</section>
+
+<section id="leads" class="page">
+<h2>Lead Capture</h2>
+<div class="card">
+<input id="leadName" placeholder="Customer name">
+<input id="leadPhone" placeholder="Phone number">
+<input id="leadEmail" placeholder="Email address">
+<textarea id="leadNeed" placeholder="What does the customer need?"></textarea>
+<button class="button" onclick="addLead()">Save Lead</button>
+</div>
+<div id="leadList"></div>
+<button class="button secondary" onclick="showPage('dashboard')">Back</button>
+</section>
+
+<section id="followups" class="page">
+<h2>Follow-ups</h2>
+<div class="card">
+<input id="followName" placeholder="Customer name">
+<input id="followDate" placeholder="Follow-up date">
+<textarea id="followMessage" placeholder="What should you follow up about?"></textarea>
+<button class="button" onclick="addFollowup()">Save Follow-up</button>
+</div>
+<div id="followList"></div>
+<button class="button secondary" onclick="showPage('dashboard')">Back</button>
+</section>
+
+<section id="pricing" class="page">
 <h2>Simple Pricing</h2>
 <div class="card">
-<h3>STARTER</h3>
-<div class="price">R299</div>
+<h2 style="color:#42e879">STARTER</h2>
+<div style="font-size:48px;font-weight:bold">R299</div>
 <p>per month</p>
-<a class="button" href="mailto:nexaflowai@example.com">Get Started</a>
+<p>✓ AI Assistant<br>✓ Lead Capture<br>✓ Follow-ups<br>✓ Business automation</p>
+<button class="button" onclick="subscribe()">Choose Starter</button>
 </div>
+<div class="card" id="subscriptionStatus">
+<p>No subscription selected.</p>
+</div>
+<button class="button secondary" onclick="showPage('dashboard')">Back</button>
 </section>
 
-<footer>
-<p>NexaFlow AI — Your Business. Automated.</p>
-</footer>
+</main>
+
+<nav>
+<button onclick="showPage('home')">🏠<br>Home</button>
+<button onclick="showPage('dashboard')">📊<br>Dashboard</button>
+<button onclick="showPage('assistant')">🤖<br>AI</button>
+<button onclick="showPage('leads')">👥<br>Leads</button>
+<button onclick="showPage('pricing')">💳<br>Plan</button>
+</nav>
+
+<script>
+let leads=JSON.parse(localStorage.getItem("leads")||"[]");
+let follows=JSON.parse(localStorage.getItem("follows")||"[]");
+
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+update();
+window.scrollTo(0,0);
+}
+
+function update(){
+document.getElementById("leadCount").textContent=leads.length;
+document.getElementById("followCount").textContent=follows.length;
+
+document.getElementById("leadList").innerHTML=leads.map((x,i)=>
+'<div class="card"><b>'+x.name+'</b><p>'+x.phone+'<br>'+x.email+'<br>'+x.need+'</p></div>'
+).join("");
+
+document.getElementById("followList").innerHTML=follows.map(x=>
+'<div class="card"><b>'+x.name+'</b><p>'+x.date+'<br>'+x.message+'</p></div>'
+).join("");
+}
+
+function addLead(){
+let x={
+name:leadName.value,
+phone:leadPhone.value,
+email:leadEmail.value,
+need:leadNeed.value
+};
+if(!x.name){alert("Enter the customer name");return}
+leads.push(x);
+localStorage.setItem("leads",JSON.stringify(leads));
+leadName.value="";
+leadPhone.value="";
+leadEmail.value="";
+leadNeed.value="";
+update();
+alert("Lead saved!");
+}
+
+function addFollowup(){
+let x={
+name:followName.value,
+date:followDate.value,
+message:followMessage.value
+};
+if(!x.name){alert("Enter the customer name");return}
+follows.push(x);
+localStorage.setItem("follows",JSON.stringify(follows));
+followName.value="";
+followDate.value="";
+followMessage.value="";
+update();
+alert("Follow-up saved!");
+}
+
+function askAI(){
+let q=document.getElementById("question").value;
+if(!q)return;
+
+let chat=document.getElementById("chat");
+chat.innerHTML+= '<div class="msg"><b>You:</b> '+q+'</div>';
+
+let answer="I can help you manage leads, customer questions, follow-ups and business tasks. Connect NexaFlow to an AI service to provide real AI-powered answers.";
+
+chat.innerHTML+='<div class="msg ai"><b>NexaFlow AI:</b> '+answer+'</div>';
+document.getElementById("question").value="";
+}
+
+function subscribe(){
+document.getElementById("subscriptionStatus").innerHTML=
+"<p style='color:#42e879'><b>Starter selected.</b></p><p>Payment integration will be connected before accepting real customer payments.</p>";
+}
+
+update();
+</script>
+
 </body>
-</html>
+                                                                             </html>
