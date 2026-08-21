@@ -5,34 +5,40 @@
 <title>NexaFlow AI</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#07111f;color:#fff;font-family:Arial,sans-serif}
-header{padding:20px;text-align:center;border-bottom:1px solid #203149}
-.logo{font-size:28px;font-weight:bold;color:#42e879}
-header small{font-size:16px;color:#d7dfeb}
+body{margin:0;background:#071225;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:24px;border-bottom:1px solid #20334d}
+.logo{font-size:32px;font-weight:bold;color:#39ef78}
+header small{font-size:17px}
 main{padding:20px;padding-bottom:100px}
 .page{display:none}
 .page.active{display:block}
-h1{font-size:30px;margin:10px 0 20px}
-h2{margin-top:10px}
-.card{background:#101f33;border:1px solid #233952;border-radius:20px;padding:20px;margin:15px 0}
-.stat{font-size:38px;color:#42e879;font-weight:bold}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-button{border:0;border-radius:12px;padding:15px;font-size:16px;font-weight:bold;background:#42e879;color:#06101c;margin:5px 0}
-button.dark{background:#1a3049;color:#fff}
-button.red{background:#e74c3c;color:#fff}
-input,textarea,select{width:100%;padding:15px;border-radius:12px;border:1px solid #30455e;background:#0b192a;color:#fff;font-size:16px;margin:6px 0 12px}
-.item{background:#172a41;border-radius:14px;padding:15px;margin:10px 0}
-.item strong{font-size:18px}
-.muted{color:#aebbc9}
-nav{position:fixed;bottom:0;left:0;right:0;background:#081629;border-top:1px solid #263b55;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 3px;z-index:10}
-nav button{background:transparent;color:#dbe5ef;padding:7px 2px;margin:0;font-size:12px}
-nav button.active{color:#42e879}
-nav span{display:block;font-size:20px}
+.card{background:#112136;border:1px solid #203b59;border-radius:24px;padding:24px;margin-bottom:20px}
+h1{font-size:34px}
+h2{font-size:22px}
+p{color:#b9c7d8;font-size:18px;line-height:1.5}
+input,textarea,button{
+width:100%;padding:16px;margin:7px 0;border-radius:14px;
+font-size:17px;border:1px solid #29445f
+}
+input,textarea{background:#08182b;color:#fff}
+textarea{min-height:100px}
+button{background:#3bea78;color:#00120a;font-weight:bold;border:0}
+button.secondary{background:#1a3049;color:#fff}
+button.danger{background:#d9534f;color:#fff}
+.stat{font-size:40px;color:#39ef78;font-weight:bold}
+.item{background:#172b42;border-radius:15px;padding:16px;margin:10px 0}
+.item strong{font-size:19px}
+.bottom{
+position:fixed;bottom:0;left:0;right:0;background:#071225;
+display:flex;justify-content:space-around;border-top:1px solid #20334d;
+padding:10px 2px
+}
+.bottom button{background:none;color:#fff;margin:0;padding:6px 2px;font-size:13px}
+.bottom span{display:block;font-size:22px}
 .chat{max-height:430px;overflow:auto}
-.msg{padding:14px;border-radius:14px;margin:10px 0;background:#172a41}
-.msg.ai{border-left:5px solid #42e879}
-.msg.you{background:#0c1b2d}
-.empty{text-align:center;padding:25px;color:#8999ab}
+.msg{padding:15px;border-radius:16px;margin:10px 0;background:#172b42}
+.msg.ai{border-left:5px solid #39ef78}
+.msg.you{background:#0c1b2e}
 </style>
 </head>
 
@@ -48,53 +54,37 @@ nav span{display:block;font-size:20px}
 <section id="home" class="page active">
 <div class="card">
 <h1>Your Business.<br>Automated.</h1>
-<p class="muted">Manage customers, capture leads, organise follow-ups and run your business from one simple app.</p>
+<p>Manage customers, capture leads, organise follow-ups and run your business from one simple app.</p>
 <button onclick="showPage('dashboard')">Open Dashboard</button>
 </div>
 
-<div class="grid">
 <div class="card">
-<div>Leads</div>
-<div class="stat" id="homeLeads">0</div>
+<h2>Leads</h2>
+<div id="homeLeads" class="stat">0</div>
 </div>
+
 <div class="card">
-<div>Follow-ups</div>
-<div class="stat" id="homeFollowups">0</div>
-</div>
+<h2>Follow-ups</h2>
+<div id="homeFollowups" class="stat">0</div>
 </div>
 </section>
 
 <section id="dashboard" class="page">
 <h1>Dashboard</h1>
 
-<div class="grid">
 <div class="card">
-<div class="muted">Total Leads</div>
-<div class="stat" id="dashLeads">0</div>
-</div>
-<div class="card">
-<div class="muted">Follow-ups</div>
-<div class="stat" id="dashFollowups">0</div>
-</div>
+<h2>Customers</h2>
+<div id="dashLeads" class="stat">0</div>
 </div>
 
 <div class="card">
-<h2>Business Overview</h2>
-<p class="muted">Your NexaFlow data is stored locally on this device.</p>
-<button onclick="showPage('leads')">Manage Leads</button>
-<button class="dark" onclick="showPage('followups')">Manage Follow-ups</button>
-</div>
-</section>
-
-<section id="ai" class="page">
-<h1>AI Assistant</h1>
-
-<div class="card chat" id="chat">
-<div class="msg ai"><strong>NexaFlow AI:</strong><br>Hello! I'm your NexaFlow AI assistant. Ask me about your business.</div>
+<h2>Follow-ups</h2>
+<div id="dashFollowups" class="stat">0</div>
 </div>
 
-<input id="question" placeholder="Ask a question...">
-<button onclick="askAI()">Ask AI</button>
+<button onclick="showPage('leads')">👥 Manage Leads</button>
+<button onclick="showPage('followups')">📋 Follow-ups</button>
+<button onclick="showPage('ai')">🤖 AI Assistant</button>
 </section>
 
 <section id="leads" class="page">
@@ -132,5 +122,22 @@ nav span{display:block;font-size:20px}
 </div>
 </section>
 
-<section id="plan" class="page">
-<h1>
+<section id="ai" class="page">
+<h1>AI Assistant</h1>
+
+<div class="card">
+<div id="chat" class="chat">
+<div class="msg ai">
+<strong>NexaFlow AI:</strong><br>
+Hello! I'm your NexaFlow AI assistant. Ask me about your business.
+</div>
+</div>
+
+<input id="question" placeholder="Ask a question...">
+<button onclick="askAI()">Ask AI</button>
+</div>
+</section>
+
+</main>
+
+<div class="bottom
